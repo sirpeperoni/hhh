@@ -1,0 +1,35 @@
+<!--<div class="heading">-->
+<!--  <h2>Login / Signup with Local Storage</h2>-->
+<!--</div>-->
+<!--<div class="loginsignup-container">-->
+<!--  <form *ngIf="activeForm === 'login'">-->
+<!--    <h2>LOGIN</h2>-->
+
+<!--    <div class="form-group">-->
+<!--      <input type="email" name="email" [(ngModel)]="loginObj.email" placeholder="Email" />-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <input type="password" name="password" [(ngModel)]="loginObj.password" placeholder="Password" />-->
+<!--    </div>-->
+<!--    <button type="submit" (click)="loginForm()">Login</button>-->
+<!--    <p (click)="toggleForm('register')">Don't have an account ? <span class="highlighted">REGISTER</span></p>-->
+<!--  </form>-->
+<!--</div>-->
+<!--<router-outlet></router-outlet>-->
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (submit)="submit.bind(this)">
+      <mat-form-field>
+        <input matInput placeholder="Логин" formControlName="login" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="E-mail" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Логин" formControlName="password" />
+      </mat-form-field>
+    </form>
+    <button mat-flat-button type="submit">Войти</button>
+    <a routerLink="/sign-up">Зарегистрироваться</a>
+  </mat-card-content>
+</mat-card>

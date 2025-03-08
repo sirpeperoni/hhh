@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent, LoginComponent, SignUpComponent } from './modules';
 
 const routes: Routes = [
   {
@@ -15,7 +13,11 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'main', // или любое другое название маршрута для основного компонента
+    path: 'sign-up',
+    component: SignUpComponent,
+  },
+  {
+    path: 'main',
     component: AdminComponent,
   },
 ];

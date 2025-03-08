@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { EmpAddEditComponent } from './emp-add-edit/emp-add-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,17 +21,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent, LoginComponent, SignUpComponent } from './modules';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { EmployeeDialogModule } from './core/components/employee-dialog/employee-dialog.module';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    AppComponent,
-    EmpAddEditComponent,
-    AdminComponent,
-  ],
+  declarations: [LoginComponent, AppComponent, AdminComponent, SignUpComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -55,6 +50,9 @@ import { AdminComponent } from './admin/admin.component';
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
+    MatCard,
+    MatCardContent,
+    EmployeeDialogModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
