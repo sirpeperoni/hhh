@@ -1,8 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { catchError, tap, throwError } from 'rxjs';
 import { AuthService } from '../../core';
 
 @Component({
@@ -20,14 +19,21 @@ export class LoginComponent {
   });
 
   constructor(
-    private snackbar: MatSnackBar,
     private router: Router,
     private readonly authService: AuthService,
   ) {}
 
-  submit() {
+  get loginControl(): UntypedFormControl {
+    return this.form.get('login') as UntypedFormControl;
+  }
+
+  get passwordControl(): UntypedFormControl {
+    return this.form.get('password') as UntypedFormControl;
+  }
+
+  submit(): void {
+    this.error = undefined;
     if (this.form.valid) {
-      this.error = undefined;
       this.authService
         .login(this.form.value)
         .pipe(

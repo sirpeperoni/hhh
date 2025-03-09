@@ -2,17 +2,16 @@
   <mat-card>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="submit()" class="form">
-        <div class="field">
-          <mat-form-field appearance="outline" class="field">
-            <input matInput placeholder="Логин" formControlName="login" />
-          </mat-form-field>
-        </div>
-        <div class="field">
-          <mat-form-field appearance="outline" class="field">
-            <input matInput type="password" placeholder="Пароль" formControlName="password" />
-              <mat-error>q1</mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Логин</mat-label>
+          <input matInput formControlName="login" />
+          <mat-error *ngIf="loginControl.errors?.['required']">Обязательно для заполнения</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>Пароль</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error *ngIf="passwordControl.errors?.['required']">Обязательно для заполнения</mat-error>
+        </mat-form-field>
         <div *ngIf="!!error" class="error">{{ error }}</div>
         <button mat-flat-button type="submit">Войти</button>
       </form>

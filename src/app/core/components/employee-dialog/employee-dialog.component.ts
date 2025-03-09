@@ -1,22 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Employee } from '../../services';
+import { Observable } from 'rxjs';
 
 interface Education {
   value: string;
   viewValue: string;
-}
-
-export interface Employee {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  birthday: string;
-  gender: string;
-  company: string;
-  experience: string;
-  salary: string;
 }
 
 @Component({
@@ -25,16 +15,16 @@ export interface Employee {
   styleUrls: ['./employee-dialog.component.scss'],
 })
 export class EmployeeDialogComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    birthday: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    education: new FormControl('', [Validators.required]),
-    company: new FormControl('', [Validators.required]),
-    experience: new FormControl('', [Validators.required]),
-    salary: new FormControl('', [Validators.required]),
+  form = new UntypedFormGroup({
+    firstName: new UntypedFormControl('', [Validators.required]),
+    lastName: new UntypedFormControl('', [Validators.required]),
+    email: new UntypedFormControl('', [Validators.required]),
+    birthday: new UntypedFormControl('', [Validators.required]),
+    gender: new UntypedFormControl('', [Validators.required]),
+    education: new UntypedFormControl('', [Validators.required]),
+    company: new UntypedFormControl('', [Validators.required]),
+    experience: new UntypedFormControl('', [Validators.required]),
+    salary: new UntypedFormControl('', [Validators.required]),
   });
 
   educations: Education[] = [
@@ -47,38 +37,27 @@ export class EmployeeDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<EmployeeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Employee | undefined,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      data: Employee | undefined;
+      onConfirm: (data: Employee) => Observable<void>;
+    },
   ) {}
 
   ngOnInit(): void {
-    if (this.data) {
-      this.form.setValue(this.data);
+    if (this.data && this.data.data) {
+      const { id, ...formData } = this.data.data;
+      this.form.setValue(formData);
     }
   }
 
   onFormSubmit() {
     if (this.form.valid) {
-      // if (this.data) {
-      //   this._empService.updateEmployee(this.data.id, this.empForm.value).subscribe({
-      //     next: (val: any) => {
-      //       this._coreService.openSnackBar('Employee detail updated!');
-      //       this._dialogRef.close(true);
-      //     },
-      //     error: (err: any) => {
-      //       console.error(err);
-      //     },
-      //   });
-      // } else {
-      //   this._empService.addEmployee(this.empForm.value).subscribe({
-      //     next: (val: any) => {
-      //       this._coreService.openSnackBar('Employee added successfully');
-      //       this._dialogRef.close(true);
-      //     },
-      //     error: (err: any) => {
-      //       console.error(err);
-      //     },
-      //   });
-      // }
+      this.data.onConfirm(this.form.value).subscribe(() => this.close());
     }
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 }
